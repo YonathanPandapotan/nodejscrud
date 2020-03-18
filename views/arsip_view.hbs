@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h2>Arsip table</h2>
+        <button data-toggle="modal" data-target="#myModalAdd" class="btn btn-success">Tambah arsip</button>
+        <table class="table table-striped" id="mytable">
+            <thead>
+                <th>ID Arsip</th>
+                <th>Nama Arsip</th>
+                <th>Pengirim</th>
+                <th>Penerima</th>
+                <th>Tanggal</th>
+                <th>Prompt</th>
+            </thead>
+            <tbody>
+                {{#each results}}
+                <tr>
+                    <td>{{ idArsip }}</td>
+                    <td>{{ namaArsip }}</td>
+                    <td>{{ pengirim }}</td>
+                    <td>{{ penerima }}</td>
+                    <td>{{ tanggal }}</td>
+                    <td>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-idarsip="{{ idArsip }}" data-namaarsip="{{ namaArsip }}" data-pengirim="{{ pengirim }}" data-penerima="{{ penerima }}" data-tanggal="{{ tanggal }}">Edit Arsip</a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-info hapus" data-idarsip="{{ idArsip }}">Hapus Arsip</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <form action="/insert" method="post">
+        <div class="modal fade" id="myModalAdd" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah arsip baru</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="idArsip" placeholder="Id Arsip" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="namaArsip" placeholder="Nama Arsip" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="pengirim" placeholder="Pengirim" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="penerima" placeholder="Penerima" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="tanggal" placeholder="Tanggal" class="form-control" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form action="/update" method="POST">
+        <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit arsip</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="namaArsip" placeholder="Nama Arsip" class="form-control namaArsip" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="pengirim" placeholder="Pengirim" class="form-control pengirim" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="penerima" placeholder="Penerima" class="form-control penerima" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="tanggal" placeholder="Tanggal" class="form-control tanggal" required>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="idArsip" class="idArsip">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form action="/delete" method="post" id="add-row-form">
+        <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">Hapus arsip</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Apa anda yakin ingin menghapus arsi ini?</strong>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" class="form-control idArsip2" name="idArsip2" required>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Hapus</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    
+    <script>
+        $(document).ready(function(){
+            $('#mytable').on('click','.edit', function(){
+                // lakukan jika onclick class edit
+                var product_id = $(this).data('idarsip');
+                var idArsip = $(this).data('idarsip');
+                var namaArsip = $(this).data('namaarsip');
+                var pengirim = $(this).data('pengirim');
+                var penerima = $(this).data('penerima');
+                var tanggal = $(this).data('tanggal');
+                $('#EditModal').modal('show');
+                $('.namaArsip').val(namaArsip);
+                $('.pengirim').val(pengirim);
+                $('.penerima').val(penerima);
+                $('.tanggal').val(tanggal);
+                $('.idArsip').val(idArsip);
+            });
+
+            $('#mytable').on('click', '.hapus', function(){
+                // lakukan jika inclick class delete
+                var idArsip = $(this).data('idarsip');
+                $('#DeleteModal').modal('show');
+                $('.idArsip2').val(idArsip);
+            });
+        });
+    </script>
+</body>
+</html>
